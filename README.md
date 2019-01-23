@@ -110,6 +110,25 @@ It always has a private ip address in the VPC as well. Public names resolve to p
   
 ### Tunnel work
 
+* My **sce bastion** had no public ip address; so I assigned it an elastic ip **34.218.177.20**
+  * Private: 10.0.0.35 on Public subnet
+* Now from a bash shell command line
+
+```
+ $ ssh -i scebastion.pem ec2-user@34.218.177.20
+ ```
+ 
+ * Moving the ```sceworker.pem``` file to the bastion server
+ 
+ ```
+ $ sftp -i scebastion.pem ec2-user@34.218.177.20
+ sftp> put sceworker.pem
+ ```
+ 
+  * Confirm by reconnection to sce bastion: Yes
+  * 
+ 
+  
 
     
   
