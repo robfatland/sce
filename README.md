@@ -128,7 +128,23 @@ It always has a private ip address in the VPC as well. Public names resolve to p
  ```
  
   * Confirm by reconnection to sce bastion: Yes
-  * 
+  * Upgrade instances? Delete spare 1TB drive on Worker? Make a new AMI?
+  * ssh ubuntu@54.70.247.255 -i scebastion.pem
+    * from bastion:
+      * `ssh -i sceprivate.pem ubuntu@10.0.1.234`
+      * notice private subnet 10.0.1
+
+      * `(jupyter notebook --no-browser --port=8889) &`
+      * copy down very long token e.g.
+        * `4109891ab3e0ec38c2aec9c427c8be11eda975ab2882a52a`
+      * exit back to bastion
+      * on bastion
+        * `ssh -N -f -i sceprivate.pem -L localhost:7005:localhost:8889 ubuntu@10.0.1.234`
+        * that's the pipe
+        * exit to local
+        * `ssh -N -f -i scebastion.pem -L localhost:7004:localhost:7005 ubuntu@54.70.247.255`
+        * open browser, localhost:7004, enter token if requested
+
  
   
 
