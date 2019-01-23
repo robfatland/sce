@@ -7,7 +7,7 @@
 * designate HIPAA to both DLT and AWS 
 * VPC **sce**
   * VPC characteristics
-    * ID **vpc-74e0c60d** in Oregon
+    * ID **vpc-74e0c60d** in Oregon (AZ = C on Network Interface; see below)
     * IPv4 CIDR 10.0.0.0/16 has 2**(32-16) addresses available (65k)
     * Network ACL acl-ad60c9d5
     * Route table rtb-884a6df0 named **sce Main** 
@@ -36,4 +36,15 @@
       * Elastic IP address 52.39.211.96 Private IP 10.0.0.104  
       * Network Interface eni-476df85e
       * Subnet **subnet-826a0dd8** (sce Public)
+      * CloudWatch enabled; see Monitoring tab
+  * Elastic IPs
+    * **sce** 34.218.177.20 **eipalloc-2a088f16** 
+      * Private IP address: None given Scope: vpc (seems to be un-used)
+    * **--no name--** 52.39.211.96 **eipalloc-5386a237** 
+      * Private IP address: 10.0.0.104 Scope: vpc eipassoc-91738e4b Network Interface ID: **eni-476df85e**
+  * Network Interface
+    * **sce** **eni-476df85e** Subnet ID **subnet-826a0dd8** Zone us-west-2c
+    * Description: **Interface for NAT Gateway Interface for NAT Gateway nat-02b636be6988c3f83**
+    * IPv4 Public IP: 52.39.211.96
+    * Primary private IPv4 IP 10.0.0.104
   
