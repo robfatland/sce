@@ -52,6 +52,8 @@
     * IPv4 Public IP: 52.39.211.96
     * Primary private IPv4 IP 10.0.0.104
   * Flow Log?
+  * CloudWatch: Gets us what?
+  * CloudTrail: Looks like what? Granularity?
   * S3 Bucket?
   * Roles? EMR_EC2_DefaultRole
   * Security Groups? 
