@@ -6,15 +6,12 @@
 * [reference page at cloudmaven](https://cloudmaven.github.io/documentation/aws_hipaa.html)
 * designate HIPAA to both DLT and AWS 
 * VPC **sce**
-  * ID **vpc-74e0c60d** in Oregon
-  * IPv4 CIDR 10.0.0.0/16 has 2**(32-16) addresses available (65k)
-  * Network ACL acl-ad60c9d5
-  * Route table rtb-884a6df0 named **sce Main** 
-  * Tenancy: Default
-  * DNS resolution Enabled
-  * DNS hostnames Enabled
-  * Owner: Czar account
-  * No flow logs
+  * VPC characteristics
+    * ID **vpc-74e0c60d** in Oregon
+    * IPv4 CIDR 10.0.0.0/16 has 2**(32-16) addresses available (65k)
+    * Network ACL acl-ad60c9d5
+    * Route table rtb-884a6df0 named **sce Main** 
+    * Tenancy: Default; DNS resolution Enabled; DNS hostnames Enabled; Owner: Czar account; No flow logs
   * Subnets
     * sce Public **subnet-826a0dd8** IPv4 10.0.0.0/24 (256) Route table rtb-ae4b6cd6 **sce Second**
     * sce Private **subnet-e4680fb3** IPv4 10.0.1.0/24 (256) Route table rtb-884a6df0 **sce Main**
