@@ -5,6 +5,7 @@
 
 * [reference page at cloudmaven](https://cloudmaven.github.io/documentation/aws_hipaa.html)
 * designate HIPAA to both DLT and AWS 
+* Assemble the following pieces (no EC2 just yet) in a Virtual Private Cloud (VPC)
 * VPC **sce**
   * VPC characteristics
     * ID **vpc-74e0c60d** in Oregon (AZ = C on Network Interface; see below)
