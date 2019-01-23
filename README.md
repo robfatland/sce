@@ -61,17 +61,14 @@
 Note: The private subnet with CIDR block 10.0.1.0/24 is home to the EC2 Worker; firewalled behind a NAT Gateway
 that blocks traffic in such as *ssh*. The public subnet is for external access via the EC2 Bastion server, with
 CIDR block 10.0.0.0/24. The public subnet connects to the internet via an Internet Gateway. It also hosts the 
-NAT Gateway; so the NAT Gateway is not 'sequestered' on the private subnet. 
+NAT Gateway; so the NAT Gateway is not 'sequestered' on the private subnet. Both the Bastion and the NAT Gateway are 
+on the public subnet but also have private subnet IP addresses. This is true of *any* resource on the public subnet: 
+It always has a private ip address in the VPC as well. Public names resolve to pirvate addresses within the VPC as needed. 
 
 
-Note: Both the Bastion and the NAT Gateway are on the public subnet but also have private subnet IP addresses.
-This is true of *any* resource on the public subnet: It always has a private ip address in the VPC as well. 
-Public names resolve to pirvate addresses within the VPC as needed. 
+### EC2 Worker and Bastion
 
-
-### EC2 Bastion and Worker
-
-* EC2 for Worker **sce worker**
+* EC2 for Worker **sce worker** **i-09c35aea9ee6c15be**
   * Launched from AMI **moby-ami-test** = **ami-0cf27374** (JupyterHub pre-installed)
   * Instance Type **m5.large**
   * Configure Instance Details
@@ -96,7 +93,26 @@ Public names resolve to pirvate addresses within the VPC as needed.
   * Security group
     * added **sce** sg-042047ec3d28c6ff1 
     * Type SSH, Protocol TCP, Port Range 22, Source 0.0.0.0/0 (open to world)
-  * launch: downloaded new key pair **sce worker** 
+  * launch: downloaded new key pair **sceworker.pem** 
+* EC2 for Bastion **sce bastion** **i-0291dffa465de737e**
+  * Amazon Linux 2 AMI (HVM), SSD Volume Type - ami-032509850cf9ee54e (64-bit x86) / ami-00ced3122871a4921 (64-bit Arm)
+  * **t2.medium**
+  * Details
+    * VPC **sce** **sce Public** 
+    * IAM Role = **None**
+    * CloudWatch **Enabled**
+    * Tenancy = **Shared**
+  * Storage
+    * Root /dev/xvda snap-04359c6bb66cf4243 8GB gp2 IOPS 100 / 3000 Not Encrypted
+  * Security group **sce** sg-042047ec3d28c6ff1
+    * Inbound rules SSH TCP PortRange 22 Source 0.0.0.0/0
+  * launch: downloaded new key pair **scebastion.pem**
+  
+### Tunnel work
+
+
+    
+  
   
     
   
