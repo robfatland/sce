@@ -51,4 +51,52 @@
     * Description: **Interface for NAT Gateway Interface for NAT Gateway nat-02b636be6988c3f83**
     * IPv4 Public IP: 52.39.211.96
     * Primary private IPv4 IP 10.0.0.104
+  * Flow Log?
+  * S3 Bucket?
+  * Roles? EMR_EC2_DefaultRole
+  * Security Groups? 
+    * added **sce** for **sce worker**
+      * needs improvement 'open to the world'
+  
+Note: The private subnet with CIDR block 10.0.1.0/24 is home to the EC2 Worker; firewalled behind a NAT Gateway
+that blocks traffic in such as *ssh*. The public subnet is for external access via the EC2 Bastion server, with
+CIDR block 10.0.0.0/24. The public subnet connects to the internet via an Internet Gateway. It also hosts the 
+NAT Gateway; so the NAT Gateway is not 'sequestered' on the private subnet. 
+
+
+Note: Both the Bastion and the NAT Gateway are on the public subnet but also have private subnet IP addresses.
+This is true of *any* resource on the public subnet: It always has a private ip address in the VPC as well. 
+Public names resolve to pirvate addresses within the VPC as needed. 
+
+
+### EC2 Bastion and Worker
+
+* EC2 for Worker **sce worker**
+  * Launched from AMI **moby-ami-test** = **ami-0cf27374** (JupyterHub pre-installed)
+  * Instance Type **m5.large**
+  * Configure Instance Details
+    * On the above VPC, **sce Private** subnet-e4680fb3
+    * Auto-assign Public IP: **Use subnet setting (Disable)**
+    * Capacity Reservation: **Open**
+    * IAM Role **EMR_EC2_DefaultRole**
+    * Shutdown Behavior **Stop**
+    * Monitoring **Checked** Enable CloudWatch detailed monitoring
+    * Tenancy: **Shared**
+    * Elastic Inference: **Not Checked**
+  * Storage
+    * 100GB Root /dev/sda1 snap-0cfb2ede9e021b4a1 (reduced from 1TB) 
+      * GP SSD (gp2) 300 / 3000 IOPS, Delete on Termination
+      * Not Encrypted
+    * 1000GB EBS /dev/sdb snap-0bcc82862c83fb7d1
+      * GP SSD (gp2) 300 / 3000 IOPS, Delete on Termination
+      * Not Encrypted
+    * 32GB Data EBS /dev/sdc 
+      * GP SSD (gp2) 100 / 3000 IOPS; no Delete on Termination
+      * Encrypted with KMS Key Alias = Default aws/ebs key alias
+  * Security group
+    * added **sce** sg-042047ec3d28c6ff1 
+    * Type SSH, Protocol TCP, Port Range 22, Source 0.0.0.0/0 (open to world)
+  * launch: downloaded new key pair **sce worker** 
+  
+    
   
