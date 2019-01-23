@@ -20,12 +20,14 @@
     * **sce Main** rtb-884a6df0 
       * Destinations 
         * 10.0.0.0/16 Target local
-        * pl-68a54001 (com.amazonaws.us-west-2.s3, 54.231.160.0/19, 52.218.128.0/17, 52.92.32.0/22) Target vpce-e923e880
+        * pl-68a54001 (com.amazonaws.us-west-2.s3, 54.231.160.0/19, 52.218.128.0/17, 52.92.32.0/22) 
+          * Target vpce-e923e880
         * 0.0.0.0/0 Target NAT Gateway **nat-02b636be6988c3f83** 
     * **sce Second** rtb-0ae4b6cd6
       * Destinations
         * 10.0.0.0/16 Target local
-        * pl-68a54001 (com.amazonaws.us-west-2.s3, 54.231.160.0/19, 52.218.128.0/17, 52.92.32.0/22)	Target vpce-e923e880
+        * pl-68a54001 (com.amazonaws.us-west-2.s3, 54.231.160.0/19, 52.218.128.0/17, 52.92.32.0/22)	
+          * Target vpce-e923e880
         * 0.0.0.0/0 Target Internet Gateway **igw-eb22528d**
   * End points
     * S3
@@ -42,7 +44,8 @@
     * **sce** 34.218.177.20 **eipalloc-2a088f16** 
       * Private IP address: None given Scope: vpc (seems to be un-used)
     * **--no name--** 52.39.211.96 **eipalloc-5386a237** 
-      * Private IP address: 10.0.0.104 Scope: vpc eipassoc-91738e4b Network Interface ID: **eni-476df85e**
+      * Private IP address: 10.0.0.104 Scope: vpc eipassoc-91738e4b 
+      * Network Interface ID: **eni-476df85e**
   * Network Interface
     * **sce** **eni-476df85e** Subnet ID **subnet-826a0dd8** Zone us-west-2c
     * Description: **Interface for NAT Gateway Interface for NAT Gateway nat-02b636be6988c3f83**
