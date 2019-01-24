@@ -59,6 +59,7 @@
   * Security Groups? 
     * added **sce** for **sce worker**
       * needs improvement 'open to the world'
+  * AWS Config with 52 pre-designed rules that we can add; not to mention customized
   
 Note: The private subnet with CIDR block 10.0.1.0/24 is home to the EC2 Worker; firewalled behind a NAT Gateway
 that blocks traffic in such as *ssh*. The public subnet is for external access via the EC2 Bastion server, with
