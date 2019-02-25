@@ -1,6 +1,11 @@
 # sce
 ## secure computing environment builder walk-through
 
+### Project
+
+* [UW IT Wiki page on ip address assignment](https://wiki.cac.washington.edu/pages/viewpage.action?pageId=53181947)
+  * 10.5.0.0/17 and 10.5.128.0/17 for Azure and AWS respectively
+  
 ### go
 
 * [reference page at cloudmaven](https://cloudmaven.github.io/documentation/aws_hipaa.html)
