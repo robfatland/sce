@@ -1,10 +1,14 @@
 # sce
 ## secure computing environment builder walk-through
 
-### Project
+### Surgical Site Infection (SSI) Project
 
+* [This repo](https://github.com/robfatland/sce)
 * [UW IT Wiki page on ip address assignment](https://wiki.cac.washington.edu/pages/viewpage.action?pageId=53181947)
   * 10.5.0.0/17 and 10.5.128.0/17 for Azure and AWS respectively
+* R and R-Studio
+* Scale of TB
+
   
 ### go
 
@@ -116,7 +120,7 @@ It always has a private ip address in the VPC as well. Public names resolve to p
     * Inbound rules SSH TCP PortRange 22 Source 0.0.0.0/0
   * launch: downloaded new key pair **scebastion.pem**
   
-### Tunnel work
+### Tunneling
 
 * My **sce bastion** had no public ip address; so I assigned it an elastic ip **34.218.177.20**
   * Private: 10.0.0.35 on Public subnet
