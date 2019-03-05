@@ -8,70 +8,27 @@
   * 10.5.0.0/17 and 10.5.128.0/17 for Azure and AWS respectively
 * R and R-Studio
 * Scale of TB
-
-### Lectroid demo config notes updated March 5 2019
-* Re-Started both the SCE Bastion and the SCE Worker per notes on Virtual Private Cloud (VPC) configuration on AWS
-  * Noting the Bastion (t2.medium ($0.05/hr)) is at elastic ip 34.218.177.20, running AWS Linux; private ip 10.0.0.35
-    * Hence the login is `ssh -i pem.pem ec2-user@34.218.177.20`
-    * Once logged in I see that the `sceworker.pem` file is in place
-    * The machine (m5.large ($0.10/hr)) is running; using the console I find it has a private subnet ip 10.0.1.40
-    * The `sceworker.pem` file needed `chmod 400`
-    * `ssh` now works from bastion to worker
-    * Complains about updates; so `sudo apt-get update` and `sudo shutdown -r now` 
-    * Logged back in; no more complaining from the OS
-    * Notice I have attached drives...
-      - A 1TB drive; so click through to that in the console, Detach, Delete: Not allowed
-      - So I Terminate sceworker and start over using moby-ami-test image
-      - With the root drive reduced to 32GB and no additional drives
-      - But the root device is still insisting on being 1TB so I start over
-    * Now I will have a new worker and it shows up at 10.0.1.140
-      * ssh fine; immediately run `sudo apt-get update`
-      * I will need a lightweight installation of Anacona called Miniconda; use these steps...
-
-```
-wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh
-```
-
-As this installation runs: Take care to respond to the prompts in the obvious manner.
-Conclude with:
-
-```
-rm Miniconda3-latest-Linux-x86_64.sh
-source ~/.bashrc
-conda create -n lectroid python=3.6
-conda activate lectroid
-```    
-
-Ooops no jupyter; so 
-
-```
-conda install ipython
-conda install jupyter
-```
-
-And now the rest works... just make sure you type `jupyter notebook` not with a trailing `s`.
+* [Older reference material](https://cloudmaven.github.io/documentation/aws_hipaa.html)
 
 
+### Starting procedure
 
 
+This sequence of steps gets two Virtual Machines (VMs) running on AWS. The first is a publicly visible guardian
+machine called a bastion server. The second resides inside a sub-space called a Virtual Private Cloud (VPC) on
+a private sub-network. It is called the worker. 
 
-This creates a Python environment that is specific to the research. We want to make sure this is apparent in
-the Jupyter notebook server interface.
-    
-* Tried to run `(jupyter notebook --no-browser --port=8889) but this failed and suggested I run
-* `sudo apt install jupyter-core` which ran properly
-* 
 
-  
-### go
+> Some details of what follows are not fully resolved and are marked with <flag>
 
-* [reference page at cloudmaven](https://cloudmaven.github.io/documentation/aws_hipaa.html)
-* designate HIPAA to both DLT and AWS 
-* Assemble the following pieces (no EC2 just yet) in a Virtual Private Cloud (VPC)
-* VPC **sce**
-  * VPC characteristics
-    * ID **vpc-74e0c60d** in Oregon (AZ = C on Network Interface; see below)
+> Every resource described here is tagged with a name that includes `sce` for *Secure Computing Environment*
+
+* Start assumption: You have opened / are opening an AWS account through DLT
+* Inform DLT and AWS that PHI/HIPAA-compliant work is in progress on this account 
+* Assemble the following components in a Virtual Private Cloud (VPC)
+  * VPC **sce** with characteristics
+    * ID **vpc-74e0c60d** in US-West-2 (Oregon)
+      * ...with Availability Zone (AZ) = C on the Network Interface; see below
     * IPv4 CIDR 10.0.0.0/16 has 2**(32-16) addresses available (65k)
     * Network ACL acl-ad60c9d5
     * Route table rtb-884a6df0 named **sce Main** 
@@ -95,6 +52,7 @@ the Jupyter notebook server interface.
   * End points
     * S3
       * **vpce-e923e880**  Service name **com.amazonaws.us-west-2.s3** Type **Gateway** 
+      * <flag> what is this S3 bucket named, is it encrypted, how is it accessed?
   * Internet Gateway 
     * **sce** **igw-eb22528d** 
   * NAT Gateway
@@ -114,22 +72,25 @@ the Jupyter notebook server interface.
     * Description: **Interface for NAT Gateway Interface for NAT Gateway nat-02b636be6988c3f83**
     * IPv4 Public IP: 52.39.211.96
     * Primary private IPv4 IP 10.0.0.104
-  * Flow Log?
-  * CloudWatch: Gets us what?
-  * CloudTrail: Looks like what? Granularity?
-  * S3 Bucket?
-  * Roles? EMR_EC2_DefaultRole
-  * Security Groups? 
+  * <flag> Flow Log?
+  * <flag> CloudWatch: Gets us what?
+  * <flag> CloudTrail: Looks like what? Granularity?
+  * <flag> Roles? EMR_EC2_DefaultRole is in use but what does it do? Is it useful?
+  * <flag> Security Groups? 
     * added **sce** for **sce worker**
-      * needs improvement 'open to the world'
-  * AWS Config with 52 pre-designed rules that we can add; not to mention customized
+      * needs improvement from 'open to the world'
+  * <flag> AWS Config with 52 pre-designed rules that we can add; not to mention customized
   
-Note: The private subnet with CIDR block 10.0.1.0/24 is home to the EC2 Worker; firewalled behind a NAT Gateway
+
+> Note: The private subnet with CIDR block 10.0.1.0/24 is home to the EC2 Worker; firewalled behind a NAT Gateway
 that blocks traffic in such as *ssh*. The public subnet is for external access via the EC2 Bastion server, with
 CIDR block 10.0.0.0/24. The public subnet connects to the internet via an Internet Gateway. It also hosts the 
 NAT Gateway; so the NAT Gateway is not 'sequestered' on the private subnet. Both the Bastion and the NAT Gateway are 
 on the public subnet but also have private subnet IP addresses. This is true of *any* resource on the public subnet: 
-It always has a private ip address in the VPC as well. Public names resolve to pirvate addresses within the VPC as needed. 
+It always has a private ip address in the VPC as well. Public names resolve to private addresses within the VPC as needed. 
+
+
+> Now that the framework is in place the next step is to start up the two EC2 instances, `sce bastion` and `sce worker`.
 
 
 ### EC2 Worker and Bastion
@@ -174,6 +135,43 @@ It always has a private ip address in the VPC as well. Public names resolve to p
     * Inbound rules SSH TCP PortRange 22 Source 0.0.0.0/0
   * launch: downloaded new key pair **scebastion.pem**
   
+### Lectroid demo config notes updated March 5 2019
+
+* Restarted SCE Bastion and Worker from the AWS console: As a *different* admin User <flag>
+  * Bastion is a t2.medium ($0.05/hr) at an elastic ip: Running Linux; with a VPC-internal private ip also
+    * `ssh -i somepem.pem username@a.b.c.d`
+      * The `sceworker.pem` file is here per the `sftp` sequence; but it required `chmod 400`
+* Restarted SCE Worker from the console as well
+  * This machine had a very expensive 1TB EBS root drive so I terminated it and began over
+  * It is an m5a.large ($0.09/hr)) EC2; where from the console I see its private subnet ip address
+    * ssh from local to bastion to worker is ok
+    * worker login msg suggests `sudo apt-get update` plus `sudo shutdown -r now` 
+    * Logged back in
+      * should validate the drive space; and this is not an encrypted drive <flag> need to re-do 
+      * need a lightweight version of Anaconda called Miniconda; plus make sure `jupyter` runs
+
+```
+wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+```
+
+As this runs: Respond to the prompts with care; and continue with:
+
+```
+rm Miniconda3-latest-Linux-x86_64.sh
+source ~/.bashrc
+conda install ipython
+conda install jupyter
+conda create -n lectroid python=3.6
+conda activate lectroid
+(jupyter notebook --no-browser --port=8889) &
+```
+
+* The `create/activate` commands get us in the habit of treating a Python environment as a sub-framework of 
+the generic general environment. <flag> What is still needed is steps to ensure this environment appears in
+the notebook server interface. 
+
+
 ### Tunneling
 
 * My **sce bastion** had no public ip address; so I assigned it an elastic ip **34.218.177.20**
