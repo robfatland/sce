@@ -43,10 +43,25 @@ conda create -n lectroid python=3.6
 conda activate lectroid
 ```    
 
+Ooops no jupyter; so 
+
+```
+conda install ipython
+conda install jupyter
+```
+
+And now the rest works... just make sure you type `jupyter notebook` not with a trailing `s`.
+
+
+
+
+
 This creates a Python environment that is specific to the research. We want to make sure this is apparent in
 the Jupyter notebook server interface.
     
-    
+* Tried to run `(jupyter notebook --no-browser --port=8889) but this failed and suggested I run
+* `sudo apt install jupyter-core` which ran properly
+* 
 
   
 ### go
