@@ -14,6 +14,38 @@
   * Noting the Bastion (t2.medium ($0.05/hr)) is at elastic ip 34.218.177.20, running AWS Linux; private ip 10.0.0.35
     * Hence the login is `ssh -i pem.pem ec2-user@34.218.177.20`
     * Once logged in I see that the `sceworker.pem` file is in place
+    * The machine (m5.large ($0.10/hr)) is running; using the console I find it has a private subnet ip 10.0.1.40
+    * The `sceworker.pem` file needed `chmod 400`
+    * `ssh` now works from bastion to worker
+    * Complains about updates; so `sudo apt-get update` and `sudo shutdown -r now` 
+    * Logged back in; no more complaining from the OS
+    * Notice I have attached drives...
+      - A 1TB drive; so click through to that in the console, Detach, Delete: Not allowed
+      - So I Terminate sceworker and start over using moby-ami-test image
+      - With the root drive reduced to 32GB and no additional drives
+      - But the root device is still insisting on being 1TB so I start over
+    * Now I will have a new worker and it shows up at 10.0.1.140
+      * ssh fine; immediately run `sudo apt-get update`
+      * I will need a lightweight installation of Anacona called Miniconda; use these steps...
+
+```
+wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+```
+
+As this installation runs: Take care to respond to the prompts in the obvious manner.
+Conclude with:
+
+```
+rm Miniconda3-latest-Linux-x86_64.sh
+source ~/.bashrc
+conda create -n lectroid python=3.6
+conda activate lectroid
+```    
+
+This creates a Python environment that is specific to the research. We want to make sure this is apparent in
+the Jupyter notebook server interface.
+    
     
 
   
@@ -91,7 +123,7 @@ It always has a private ip address in the VPC as well. Public names resolve to p
   * Launched from AMI **moby-ami-test** = **ami-0cf27374** (JupyterHub pre-installed)
   * Instance Type **m5.large**
   * Configure Instance Details
-    * On the above VPC, **sce Private** subnet-e4680fb3
+    * On the above VPC, **sce Private** subnet-e4680fbe
     * Auto-assign Public IP: **Use subnet setting (Disable)**
     * Capacity Reservation: **Open**
     * IAM Role **EMR_EC2_DefaultRole**
