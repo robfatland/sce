@@ -95,32 +95,30 @@ It always has a private ip address in the VPC as well. Public names resolve to p
 
 ### EC2 Worker and Bastion
 
-* EC2 for Worker **sce worker** **i-09c35aea9ee6c15be**
-  * Launched from AMI **moby-ami-test** = **ami-0cf27374** (JupyterHub pre-installed)
-  * Instance Type **m5.large**
-  * Configure Instance Details
-    * On the above VPC, **sce Private** subnet-e4680fbe
+* EC2 for Worker **sce worker** **i-xxxxxxxxxxxxxxxxxxx**
+  * <flag> need to include creating an AMI and launching this worker from the AMI
+    * this obviates the need to keep installing Python machinery for Jupyter notebook support
+  * Ubuntu Linux is the suggested OS; using an AWS Linux image is fine 
+  * Instance Type **m5a.large**
+  * Configuration wizard details
+    * Place on the sce VPC, subnet = **sce Private** subnet-xxxxxxxx
     * Auto-assign Public IP: **Use subnet setting (Disable)**
     * Capacity Reservation: **Open**
     * IAM Role **EMR_EC2_DefaultRole**
     * Shutdown Behavior **Stop**
-    * Monitoring **Checked** Enable CloudWatch detailed monitoring
+    * Monitoring **Checked** Enable CloudWatch detailed monitoring <flag> needs validation
     * Tenancy: **Shared**
-    * Elastic Inference: **Not Checked**
+    * Elastic Inference: **Not Checked** <flag> what is this?
   * Storage
-    * 100GB Root /dev/sda1 snap-0cfb2ede9e021b4a1 (reduced from 1TB) 
-      * GP SSD (gp2) 300 / 3000 IOPS, Delete on Termination
-      * Not Encrypted
-    * 1000GB EBS /dev/sdb snap-0bcc82862c83fb7d1
-      * GP SSD (gp2) 300 / 3000 IOPS, Delete on Termination
-      * Not Encrypted
-    * 32GB Data EBS /dev/sdc 
-      * GP SSD (gp2) 100 / 3000 IOPS; no Delete on Termination
+    * 32GB Root /dev/sda1  
+      * Not Encrypted <flag> Validate this is ok w/r/t operation; e.g. does `jupyter` raise concerns?
+    * Attach drive
+      * 32GB Data EBS <flag> name? details? Delete on Termination? How to mount / use?  
       * Encrypted with KMS Key Alias = Default aws/ebs key alias
   * Security group
     * added **sce** sg-042047ec3d28c6ff1 
     * Type SSH, Protocol TCP, Port Range 22, Source 0.0.0.0/0 (open to world)
-  * launch: downloaded new key pair **sceworker.pem** 
+  * launch: generate and download key pair **sceworker.pem** 
 * EC2 for Bastion **sce bastion** **i-0291dffa465de737e**
   * Amazon Linux 2 AMI (HVM), SSD Volume Type - ami-032509850cf9ee54e (64-bit x86) / ami-00ced3122871a4921 (64-bit Arm)
   * **t2.medium**
