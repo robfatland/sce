@@ -9,6 +9,12 @@
 * R and R-Studio
 * Scale of TB
 
+### Configuration notes updated March 5 2019
+* Re-Started both the SCE Bastion and the SCE Worker per notes on Virtual Private Cloud (VPC) configuration on AWS
+  * Noting the Bastion (t2.medium ($0.05/hr)) is at elastic ip 34.218.177.20, running AWS Linux; private ip 10.0.0.35
+    * Hence the login is `ssh -i pem.pem ec2-user@34.218.177.20`
+  
+
   
 ### go
 
