@@ -1,4 +1,13 @@
 # sce
+
+This repo is concerned with building secure computing environments, abbreviated here '**sce**'
+[.](https://github.com/robfatland/ops)
+
+
+We are concerned with an increasing demand for these environments (think HIPAA compliance) for medical research
+founded on clinical data where patient privacy is of greatest concern. 
+
+
 ## secure computing environment builder walk-through
 
 ### Surgical Site Infection (SSI) Project
