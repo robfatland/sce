@@ -45,3 +45,6 @@ https://docs.microsoft.com/en-us/azure/governance/blueprints/samples/nist-sp-800
 
 
 [Here is an overview of this blueprint.](https://docs.microsoft.com/en-us/azure/governance/blueprints/samples/nist-sp-800-53-rev4/index)
+
+
+[Control mapping (parameters) doc](https://docs.microsoft.com/en-us/azure/governance/blueprints/samples/nist-sp-800-53-rev4/control-mapping)
