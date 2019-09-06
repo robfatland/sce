@@ -38,10 +38,7 @@ closely related: HITECH act
 So as I wrote at the top: We are going to build a synthetic system on Azure. 
 
 
-First procedural steps here: 
-
-
-https://docs.microsoft.com/en-us/azure/governance/blueprints/samples/nist-sp-800-53-rev4/deploy
+[Procedural start](https://docs.microsoft.com/en-us/azure/governance/blueprints/samples/nist-sp-800-53-rev4/deploy)
 
 
 [Here is an overview of this blueprint.](https://docs.microsoft.com/en-us/azure/governance/blueprints/samples/nist-sp-800-53-rev4/index)
