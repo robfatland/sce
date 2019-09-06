@@ -45,3 +45,6 @@ So as I wrote at the top: We are going to build a synthetic system on Azure.
 
 
 [Control mapping (parameters) doc](https://docs.microsoft.com/en-us/azure/governance/blueprints/samples/nist-sp-800-53-rev4/control-mapping)
+
+
+I followed the "Procedural start" up to the ***Assign*** click using a generic *rob-hipaa* label in all cases. 
