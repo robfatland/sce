@@ -53,11 +53,8 @@ I followed the "Procedural start" up to the ***Assign*** click using a generic *
 ### intermezzo courtesy of Clayton
 
 
-Rob here is a link for the HIPAA blueprint and some additional resources.  These are a bit older and there is not
-a one click deploy on Azure like there is with 800-53 yet but all signs indicate it is coming shortly.  I will be
-onsite this week working with folks from Genomics to deploy a POC into Azure FYI.  I will keep you posted as to
-how that goes as it might give us a good group of Azure users there at UW.
-
+Links for HIPAA blueprint and related follow.  One-click is pending (as above with 800-53).
+Genomics POC on Azure pending.
  
 
 [HIPAA Blueprint at Azure](https://servicetrust.microsoft.com/ViewPage/HIPAABlueprint)
