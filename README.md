@@ -17,6 +17,7 @@ founded on clinical data where patient privacy is of greatest concern.
   * 10.5.0.0/17 and 10.5.128.0/17 for Azure and AWS respectively
 * R and R-Studio
 * Scale of TB
+* [NIST 800-66 Rev 1 HIPAA Security Rule](http://csrc.nist.gov/publications/nistpubs/800-66-Rev1/SP-800-66-Revision1.pdf)
 * [Older reference material](https://cloudmaven.github.io/documentation/aws_hipaa.html)
 
 
